@@ -1,0 +1,15 @@
+{% load static %}
+<link type='text/css' href="{% static 'Dealer/css/pagination.css' %}" rel="stylesheet" />
+<div id="app" class="container-pagination">  
+    <ul class="page">
+        {% for page_number in page_obj.paginator.get_elided_page_range %}
+            {% if page_number == page_obj.paginator.ELLIPSIS %}
+                <li class="page__numbers">{{page_number}}</li>
+            {% else %}
+                <a href="?page={{ page_number }}"class="{% if page_number == page_obj.number %}current{% endif %}">
+                    <li class="page__numbers active">{{page_number}}</li>
+                </a>
+            {% endif %}
+        {% endfor %}
+    </ul>
+</div>

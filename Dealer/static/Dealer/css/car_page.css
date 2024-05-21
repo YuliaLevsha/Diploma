@@ -1,0 +1,57 @@
+.container{
+    margin: 10px;
+    width: 90%;
+    max-width: 90vw;
+    text-align: center;
+    padding: 20px;
+    background-color: white;
+}
+
+.link{
+    color: unset;
+    text-decoration: none;
+}
+
+.title{
+    font-size: xx-large;
+    padding: 20px 0;
+}
+
+.detail{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 50px;
+    text-align: left;
+}
+
+.detail .image img{
+    margin: 40px;
+    width: 700px;
+    height: 500px;
+}
+
+.detail .image{
+    position: relative;
+}
+
+.content{
+    margin: 40px;
+    color: black;
+}
+
+.content-field{
+    margin: 20px 20px;
+    display: flex;
+    flex-direction: row;
+}
+
+.content-title{
+    font-weight: bold;
+    font-size: 30px;
+    padding-right: 20px;
+}
+
+.content-value{
+    font-size: 30px;
+}
+

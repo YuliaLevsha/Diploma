@@ -1,0 +1,22 @@
+{% extends "Customer/base.html" %}
+{% load static %}
+
+{% block css %} 
+    <link type='text/css' href="{% static 'Dealer/css/add_car.css' %}" rel="stylesheet" />
+{% endblock %}
+
+{% block content %} 
+    <div class="container">
+        <div class="add form">
+            <header>Изменить машину</header>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %} 
+                {% for field in context %} 
+                    {{ field.label_tag }}
+                    {{ field }}
+                {% endfor %}
+            <button class="button">Обновить</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

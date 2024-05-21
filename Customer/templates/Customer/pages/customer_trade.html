@@ -1,0 +1,11 @@
+{% extends "Customer/base.html" %}
+{% block content %} 
+    <div class="container">
+        <h1>Customer trade page</h1>
+        {% csrf_token %} 
+        {% for field in context %} 
+                {{ field.label_tag }}
+                {{ field }} 
+            {% endfor %} 
+    </div>
+{% endblock %}

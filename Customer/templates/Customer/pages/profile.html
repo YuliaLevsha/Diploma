@@ -1,0 +1,60 @@
+{% extends "Customer/base.html" %}
+{% load static %}
+
+{% block css %} 
+    <link type='text/css' href="{% static 'Customer/css/profile.css' %}" rel="stylesheet" />
+{% endblock %}
+
+{% block content %} 
+    <div class="container">
+        <div class="profile">
+            <div class="profile-header">
+                <img src="{% static 'Customer/images/avatar-1577909_1280.png' %}" alt="profile" class="profile-img">
+                <div class="profile-text-container">
+                    <h1 class="profile-title">{{user.username}}</h1>
+                    <p class="profile-email">{{user.email}}</p>
+                </div>
+            </div>
+            <div class="menu">
+                <a href="{% url 'user_profile' %}" class="menu-link-choose">Профиль</a>
+                <a href="{% url 'change_profile' %}" class="menu-link">Изменить информацию о себе</a>
+                <a href="{% url 'change_password' %}" class="menu-link">Изменить пароль</a>
+            </div>
+        </div>
+        <form class="account">
+            <div class="account-header">
+                <h1 class="account-title">Информация об пользователе</h1>
+            </div>
+            <div class="account-edit">
+                <div class="input-container">
+                    <label>Username:</label>
+                    <input value="{{user.username}}" readonly>
+                </div>
+                <div class="input-container">
+                    <label>Email:</label>
+                    <input value="{{user.email}}" readonly>
+                </div>
+                <div class="input-container">
+                    <label>First name:</label>
+                    <input value="{{user.first_name}}" readonly>
+                </div>
+                <div class="input-container">
+                    <label>Last name:</label>
+                    <input value="{{user.last_name}}" readonly>
+                </div>
+                <div class="input-container">
+                    <label>Date birth:</label>
+                    <input value="{{user.date_birth}}" readonly>
+                </div>
+                <div class="input-container">
+                    <label>Passport:</label>
+                    <input value="{{user.passport}}" readonly>
+                </div>
+                <div class="input-container">
+                    <label>Phone:</label>
+                    <input value="{{user.phone}}" readonly>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

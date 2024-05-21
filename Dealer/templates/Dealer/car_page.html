@@ -1,0 +1,52 @@
+{% extends "Customer/base.html" %}
+{% load static %}
+
+{% block css %} 
+    <link type='text/css' href="{% static 'Dealer/css/car_page.css' %}" rel="stylesheet" />
+{% endblock %}
+
+{% block content %} 
+    <div class="container">
+        <div class="title">О машине</div>
+        <a href="{% url 'edit_car' car_id=car.id %}" class="link"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#5f6368"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/></svg></a>
+        <div class="detail">
+            <div class="image">
+                <img src="{{car.car_image.url}}" alt="car">
+            </div>
+            <div class="content">
+                <div class="content-field">
+                    <div class="content-title">Модель: </div>
+                    <div class="content-value">{{car.car_model}}</div>
+                </div>
+                <div class="content-field">
+                    <div class="content-title">Год выпуска: </div>
+                    <div class="content-value">{{car.car_year}}</div>
+                </div>
+                <div class="content-field">
+                    <div class="content-title">Цвет: </div>
+                    <div class="content-value">{{car.car_color}}</div>
+                </div>
+                <div class="content-field">
+                    <div class="content-title">Количество дверей: </div>
+                    <div class="content-value">{{car.number_of_doors}}</div>
+                </div>
+                <div class="content-field">
+                    <div class="content-title">Тип кузова: </div>
+                    <div class="content-value">{{car.body_type}}</div>
+                </div>
+                <div class="content-field">
+                    <div class="content-title">Страна производитель: </div>
+                    <div class="content-value">{{car.country}}</div>
+                </div>
+                <div class="content-field">
+                    <div class="content-title">Тип привода: </div>
+                    <div class="content-value">{{car.type_drive}}</div>
+                </div>
+                <div class="content-field">
+                    <div class="content-title">Объем топливного бака: </div>
+                    <div class="content-value">{{car.volume_fuel_tank}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

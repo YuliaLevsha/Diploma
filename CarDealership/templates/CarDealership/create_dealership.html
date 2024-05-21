@@ -1,0 +1,22 @@
+{% extends "Customer/base.html" %}
+{% load static %}
+
+{% block css %} 
+    <link type='text/css' href="{% static 'CarDealership/css/add_dealership.css' %}" rel="stylesheet" />
+{% endblock %}
+
+{% block content %} 
+    <div class="container">
+        <div class="add form">
+            <header>Добавить новый автосалон</header>
+            <form method="post">
+                {% csrf_token %} 
+                {% for field in context %} 
+                    {{ field.label_tag }}
+                    {{ field }}
+                {% endfor %} 
+            <button class="button">Добавить</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

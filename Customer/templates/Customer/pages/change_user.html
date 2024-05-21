@@ -1,0 +1,43 @@
+{% extends "Customer/base.html" %}
+{% load static %}
+
+{% block css %} 
+    <link type='text/css' href="{% static 'Customer/css/profile.css' %}" rel="stylesheet" />
+{% endblock %}
+
+{% block content %} 
+    <div class="container">
+        <div class="profile">
+            <div class="profile-header">
+                <img src="{% static 'Customer/images/avatar-1577909_1280.png' %}" alt="profile" class="profile-img">
+                <div class="profile-text-container">
+                    <h1 class="profile-title">{{user.username}}</h1>
+                    <p class="profile-email">{{user.email}}</p>
+                </div>
+            </div>
+            <div class="menu">
+                <a href="{% url 'user_profile' %}" class="menu-link">Профиль</a>
+                <a href="{% url 'change_profile' %}" class="menu-link-choose">Изменить информацию о себе</a>
+                <a href="{% url 'change_password' %}" class="menu-link">Изменить пароль</a>
+            </div>
+        </div>
+        <form class="account" method="post">
+            <div class="account-header">
+                <h1 class="account-title">Изменить информацию о себе</h1>
+                <div class="btn-container">
+                    <button class="btn-cancel" name="cancel" value="cancel">Отмена</button>
+                    <button class="btn-save" name="save" value="save">Сохранить</button>
+                </div>
+            </div>
+            <div class="account-edit">
+                {% csrf_token %} 
+                {% for field in context %}
+                    <div class="input-container">
+                        <label>{{ field.label_tag }}</label>
+                        {{field}}
+                    </div>
+                {% endfor %}
+            </div>
+        </form>
+    </div>
+{% endblock %}

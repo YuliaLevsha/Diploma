@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CarDealership</title>
+    
+    <link type='text/css' href="{% static 'Customer/css/register_login.css' %}" rel="stylesheet" />
+</head>
+<body>
+<div class="container">
+    <div class="login form">
+        <header>Авторизация</header>
+        <form method="post">
+            {% csrf_token %} 
+            {% for field in context %} 
+                {{ field.label_tag }}
+                {{ field }}
+            {% endfor %} 
+            <a href="{% url 'forgot_password' %}">Забыли пароль?</a>
+            <button class="button">Войти</button>
+        </form>
+        <div class="signup">
+            <span class="signup">Нет аккаунта?
+                <label><a href="{% url 'register' %}">Регистрация</a></label>
+            </span>
+        </div>
+    </div>
+</div>
+</body>
+</html>

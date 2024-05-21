@@ -1,0 +1,24 @@
+{% extends "Customer/base.html" %}
+{% block content %} 
+    {% if messages %}
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+    {% endif %}
+
+    <div class="container">
+        <h1>Create trade page</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %} 
+            {% for field in context %} 
+                {{ field.label_tag }}
+                {{ field }} 
+                {% for error in field.errors %} 
+                    {{ error }}
+                {% endfor %} 
+            {% endfor %}
+
+            <button type="submit">Подать заявку</button> 
+        </form>
+    </div>
+{% endblock %}

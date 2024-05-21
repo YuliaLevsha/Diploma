@@ -1,0 +1,40 @@
+{% extends "Customer/base.html" %}
+{% load static %}
+
+{% block css %} 
+    <link type='text/css' href="{% static 'Dealer/css/get_list.css' %}" rel="stylesheet" />
+{% endblock %}
+
+{% block content %} 
+    <div class="container content">
+        {% for dealer in dealers %}
+            <div class="dealer-info">
+                <h1>{{dealer.name}}</h1>
+                <a href="{% url 'edit_dealer' dealer=dealer.name %}"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#5f6368"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/></svg></a>
+            </div>
+            <div class="cards">
+                <div class="cards-grid">
+                    {% for dealer_car in page_obj %}
+                        {% if dealer.pk == dealer_car.dealer.pk %}
+                            <div class="card">
+                                <div class="image">
+                                    <img src="{{dealer_car.car.car_image.url}}" alt="car"/>
+                                </div>
+                                <div class="info">
+                                    <h3>{{ dealer_car.car.car_model }}</h3>
+                                    <div class="info-price">
+                                        <span class="price">{{ dealer_car.price }}</span>
+                                    </div>
+                                    <div class="infor-more">
+                                        <a class="info-link" href="{% url 'get_car' car_id=dealer_car.car.pk %}">Подробнее</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    {% include 'Dealer/pagination.html' %}
+{% endblock %}

@@ -1,0 +1,29 @@
+.container-pagination{
+    margin: 0 auto;
+    padding: 10px;
+}
+
+.page{
+    display: flex;
+	padding: 0;
+	margin: 0;
+	box-shadow: 0 10px 20px 0 rgba(black, 0.25);
+}
+
+.page__numbers{
+    flex: 1;
+	list-style: none;
+	text-align: center;
+	position: relative;
+	font-size: 20px;
+	font-weight: bold;
+	transition: 0.5s ease;
+	cursor: pointer;
+	user-select: none;
+	margin-right: 10px;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}

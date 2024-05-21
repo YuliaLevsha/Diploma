@@ -1,0 +1,86 @@
+.content{
+    margin-top: 50px;
+}
+
+.container{
+    width: 100%;
+    margin: 0 50px;
+}
+
+.dealer-info{
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.cards-grid{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 20px;
+}
+
+.cards{
+    margin-bottom: 20px;
+}
+
+.card{
+    display: flex;
+    flex-direction: column;
+    background: #fff none repeat scroll 0 0;
+	border: 1px solid #c0c0c0;
+	height: 350px;
+	overflow: hidden;
+	position: relative;
+	text-align: center;
+	transition: all 0.5s ease 0s;
+    width: 300px;
+}
+
+.card:hover{
+    box-shadow: 0 0 16px rgba(0, 0, 0, 0.5);
+}
+
+.image{
+    height: 200px;
+}
+
+.image img{
+    height: 200px;
+    width: 300px;
+    object-fit: cover;
+    border-radius: 7px;
+}
+
+.info h3{
+    font-size: 30px;
+    margin-bottom: 0;
+    color: #000;
+	font-weight: 500;
+	text-transform: uppercase;
+}
+
+.info-price{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    margin-top: 10px;
+    align-items: center;
+}
+
+.price{
+	left: 0;
+	width: 100%;
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.info-link{
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: 600;
+    color: black;
+}
+
+.info-link:hover{
+    color: #009575;
+}
