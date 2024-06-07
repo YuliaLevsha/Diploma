@@ -10,31 +10,16 @@
     <link type='text/css' href="{% static 'Customer/css/base.css' %}" rel="stylesheet" />
     {% block css %} 
     {% endblock %}
+    {% block script %}
+    {% endblock %}
 </head>
 <body>
     <nav>
         <ul class="sidebar">
             <li onclick="hideSidebar()"><a><svg xmlns="http://www.w3.org/2000/svg" height="26px" viewBox="0 -960 960 960" width="26px" fill="#5f6368"><path d="m249-207-42-42 231-231-231-231 42-42 231 231 231-231 42 42-231 231 231 231-42 42-231-231-231 231Z"/></svg></a></li>
             {% if is_buy %}
-                <li class="first-sidebar"><a href="{% url 'user_profile' %}"><svg xmlns="http://www.w3.org/2000/svg" height="80px" viewBox="0 -960 960 960" width="80px" fill="#5f6368"><path d="M222-255q63-44 125-67.5T480-346q71 0 133.5 23.5T739-255q44-54 62.5-109T820-480q0-145-97.5-242.5T480-820q-145 0-242.5 97.5T140-480q0 61 19 116t63 109Zm257.81-195q-57.81 0-97.31-39.69-39.5-39.68-39.5-97.5 0-57.81 39.69-97.31 39.68-39.5 97.5-39.5 57.81 0 97.31 39.69 39.5 39.68 39.5 97.5 0 57.81-39.69 97.31-39.68 39.5-97.5 39.5Zm.66 370Q398-80 325-111.5t-127.5-86q-54.5-54.5-86-127.27Q80-397.53 80-480.27 80-563 111.5-635.5q31.5-72.5 86-127t127.27-86q72.76-31.5 155.5-31.5 82.73 0 155.23 31.5 72.5 31.5 127 86t86 127.03q31.5 72.53 31.5 155T848.5-325q-31.5 73-86 127.5t-127.03 86Q562.94-80 480.47-80Zm-.47-60q55 0 107.5-16T691-212q-51-36-104-55t-107-19q-54 0-107 19t-104 55q51 40 103.5 56T480-140Zm0-370q34 0 55.5-21.5T557-587q0-34-21.5-55.5T480-664q-34 0-55.5 21.5T403-587q0 34 21.5 55.5T480-510Zm0-77Zm0 374Z"/></svg></a></li>
-                <li><a href="{% url 'add_dealer' %}">Добавить поставщика</a></li>
-                <li><a href="{% url 'add_car' %}">Добавить машину поставщику</a></li>
-                <li><a href="{% url 'change_password' %}">Сменить пароль</a></li>
-                <li class="last-logout-sidebar"><a href="{% url 'logout' %}">Выйти</a></li>
             {% elif user_authenticated %}
-                <li><a href="{% url 'create_offer' %}">Создание offer</a></li>
-                <li><a href="{% url 'create_credit' %}">Заявка на кредит</a></li>
-                <li><a href="{% url 'create_trade' %}">Заявка на обмен</a></li>
-                <li><a href="{% url 'customer_trade' %}">Мои машины на обмен</a></li>
-                <li><a href="{% url 'customer_requests' %}">Мои заявки</a></li>
-                <li><a href="{% url 'dealership_cars' %}">Список машин автосалона</a></li>
-                <li><a href="{% url 'user_profile' %}">Профиль</a>
-                <li><a href="{% url 'change_password' %}">Сменить пароль</a></li>
-                <li><a href="{% url 'customer_history' %}">История покупок</a></li>
-                <li><a href="{% url 'logout' %}">Выйти</a></li>
             {% else %}
-                <li><a href="{% url 'register' %}">Регистрация</a></li>
-                <li><a href="{% url 'login' %}">Войти</a></li>
             {% endif %}
         </ul>
         <ul>
@@ -46,51 +31,63 @@
                         <li class="hideOnMobile"><a href="{% url 'add_car' %}">Добавить машину</a></li>
                     </ul>
                 </li>
-                <li class="hideOnMobile"><a href="{% url 'dealer_cars' %}">Список поставщиков</a></li>
-                <li class="hideOnMobile"><a href="">Заявки</a></li>
-                <li class="hideOnMobile"><a href="">История продаж</a></li>
+                <li class="hideOnMobile"><a>Список</a>
+                    <ul>
+                        <li class="hideOnMobile"><a href="{% url 'dealer_cars' %}">Машин</a></li>
+                        <li class="hideOnMobile"><a href="{% url 'get_dealers' %}">Поставщиков</a></li>
+                    </ul>
+                </li>
+                <li class="hideOnMobile"><a href="{% url 'dealer_confirm' %}">Заявки</a></li>
+                <li class="hideOnMobile"><a href="{% url 'dealer_history' %}">История продаж</a></li>
                 <li class="hideOnMobile"><a href="{% url 'user_profile' %}">Профиль</a></li>
+                <li class="last-logout"><a href="{% url 'logout' %}"><b>Выйти</b></a></li>
+            {% elif is_director %}
+                <li class="hideOnMobile"><a href="{% url 'director_history' %}">История действий работников</a></li>
                 <li class="last-logout"><a href="{% url 'logout' %}"><b>Выйти</b></a></li>
             {% elif is_customer %}
                 <li class="hideOnMobile"><a>Автосалон</a>
                     <ul>
                         <li class="hideOnMobile"><a href="{% url 'create_dealership' %}">Добавить</a></li>
-                        <li class="hideOnMobile"><a href="{% url 'get_dealership_cars' %}">Список машин</a></li>
+                        <li class="hideOnMobile"><a href="{% url 'get_dealerships' %}">Список</a></li>
+                    </ul>
+                </li>
+                <li class="hideOnMobile"><a>Машины</a>
+                    <ul>
+                        <li class="hideOnMobile"><a href="{% url 'dealer_cars' %}">Поставщиков</a></li>
+                        <li class="hideOnMobile"><a href="{% url 'get_dealership_cars' %}">Автосалонов</a></li>
                     </ul>
                 </li>
                 <li class="hideOnMobile"><a href="">Подтверждение</a>
                     <ul>
-                        <li class="hideOnMobile"><a href="">Обмена</a>
-                        <li class="hideOnMobile"><a href="">Покупки</a></li>
-                        <li class="hideOnMobile"><a href="">Кредита</a></li>
+                        <li class="hideOnMobile"><a href="{% url 'confirm_trade' %}">Обмена</a>
+                        <li class="hideOnMobile"><a href="{% url 'confirm_offer' %}">Покупки</a></li>
+                        <li class="hideOnMobile"><a href="{% url 'confirm_credit' %}">Кредита</a></li>
                     </ul>
                 </li>
-                <li class="hideOnMobile"><a href="">История продаж</a></li>
+                <li class="hideOnMobile"><a href="{% url 'dealership_requests' %}">Заявки на покупку у поставщиков</a></li>
+                <li class="hideOnMobile"><a href="{% url 'get_dealership_history' %}">История продаж</a></li>
                 <li class="hideOnMobile"><a href="{% url 'user_profile' %}">Профиль</a></li>
                 <li class="last-logout"><a href="{% url 'logout' %}"><b>Выйти</b></a></li>
             {% elif user_authenticated %}
                 <li class="hideOnMobile"><a>Заявки</a>
                     <ul>
-                        <li class="hideOnMobile"><a href="{% url 'create_offer' %}">Создание offer</a></li>
+                        <li class="hideOnMobile"><a href="{% url 'create_offer' %}">Заявка на бронирование</a></li>
                         <li class="hideOnMobile"><a href="{% url 'create_credit' %}">Заявка на кредит</a></li>
                         <li class="hideOnMobile"><a href="{% url 'create_trade' %}">Заявка на обмен</a></li>
                     </ul>
                 </li>
                 <li class="hideOnMobile"><a>Просмотр</a>
                     <ul>
-                        <li class="hideOnMobile"><a href="{% url 'customer_trade' %}">Мои машины на обмен</a></li>
+                        <li class="hideOnMobile"><a href="{% url 'get_customer_trade' %}">Мои машины на обмен</a></li>
                         <li class="hideOnMobile"><a href="{% url 'customer_requests' %}">Мои заявки</a></li>
-                    </ul>
-                </li>
-                <li class="hideOnMobile"><a href="{% url 'dealership_cars' %}">Список машин автосалона</a></li>
-                <li class="hideOnMobile"><a href="{% url 'user_profile' %}">Профиль</a>
-                    <ul>
                         <li class="hideOnMobile"><a href="{% url 'customer_history' %}">История покупок</a></li>
-                        <li class="hideOnMobile"><a href="{% url 'change_password' %}">Сменить пароль</a></li>
                     </ul>
                 </li>
+                <li class="hideOnMobile"><a href="{% url 'get_dealership_cars' %}">Список машин автосалона</a></li>
+                <li class="hideOnMobile"><a href="{% url 'user_profile' %}">Профиль</a></li>
                 <li class="last-logout"><a href="{% url 'logout' %}">Выйти</a></li>
             {% else %}
+                <li class="hideOnMobile"><a href="{% url 'get_dealership_cars' %}">Список машин</a></li>
                 <li class="hideOnMobile"><a href="{% url 'register' %}"><b>Регистрация</b></a></li>
                 <p class="hideOnMobile">|</p>
                 <li class="hideOnMobile"><a href="{% url 'login' %}"><b>Войти</b></a></li>

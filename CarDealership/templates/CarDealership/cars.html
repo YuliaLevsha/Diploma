@@ -1,0 +1,135 @@
+{% extends "Customer/base.html" %}
+{% load static %}
+
+{% block css %} 
+    <link type='text/css' href="{% static 'Dealer/css/get_list.css' %}" rel="stylesheet" />
+{% endblock %}
+
+{% block content %} 
+    <div class="root">
+        <div class="wrapper">
+            <div class="filter-block">
+                <form method="get">
+                    <div class="filter-row">
+                        <div class="filter-name">Модель:</div>
+                        <div class="filter-vl">{{ dealership_filter.form.id_dealer_car__car__car_model }}</div>
+                    </div>
+                    <div class="filter-row">
+                        <div class="filter-name">Комплектация:</div>
+                        <div class="filter-vl">{{ dealership_filter.form.id_dealer_car__car__car_class }}</div>
+                    </div>
+                    <div class="filter-row">
+                        <div class="filter-name">Год:</div>
+                        <div class="filter-vl">{{ dealership_filter.form.id_dealer_car__car__car_year }}</div>
+                    </div>
+                    <div class="filter-row">
+                        <div class="filter-name">Коробка передач:</div>
+                        <div class="filter-vl">{{ dealership_filter.form.id_dealer_car__car__transmission }}</div>
+                    </div>
+                    <div class="filter-row">
+                        <div class="filter-name">Тип привода:</div>
+                        <div class="filter-vl">{{ dealership_filter.form.id_dealer_car__car__type_drive }}</div>
+                    </div>
+                    <div class="filter-row">
+                        <div class="filter-name">Тип кузова:</div>
+                        <div class="filter-vl">{{ dealership_filter.form.id_dealer_car__car__body_type }}</div>
+                    </div>
+                    <div class="filter-row">
+                        <div class="filter-name">Автосалон:</div>
+                        <div class="filter-vl">{{ dealership_filter.form.car_dealership }}</div>
+                    </div>
+                    <div class="filter-row">
+                        <div class="filter-name">Цвет:</div>
+                        <div class="filter-vl">{{ dealership_filter.form.id_dealer_car__car__car_color }}</div>
+                    </div>
+                    <div class="filter-btn">
+                        <button>Применить</button>
+                    </div>
+                </form>
+            </div>
+            <div class="cars-block">
+                {% for dealer_car in page_obj %}
+                    <div class="card">
+                        <div class="image">
+                            {% if dealer_car.is_booked == True %}
+                                <h3>Забронировано</h3>
+                            {% endif %}
+                            <a href="{% url 'get_car' car_id=dealer_car.id_dealer_car.car.id%}"><img src="{{dealer_car.id_dealer_car.car.car_image.url}}" alt="car"/></a>
+                        </div>
+                        <div class="info">
+                            <div class="main-info">
+                                <div class="car-name">
+                                    <p>{{ dealer_car.id_dealer_car.car.name }}</p>
+                                </div>
+                                <div class="car-year">
+                                    <p>Год: {{ dealer_car.id_dealer_car.car.car_year }}г.</p>
+                                </div>
+                            </div>
+                            <div class="car-characters">
+                                <ul>
+                                    <li>
+                                        <diV class="name-character">
+                                            <h3>Тип топлива:</h3>
+                                        </diV>
+                                        <div class="val-character">
+                                            {{dealer_car.id_dealer_car.car.type_fuel }}
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <diV class="name-character">
+                                            <h3>КПП:</h3>
+                                        </diV>
+                                        <div class="val-character">
+                                            {{ dealer_car.id_dealer_car.car.transmission }}
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <diV class="name-character">
+                                            <h3>Тип привода:</h3>
+                                        </diV>
+                                        <div class="val-character">
+                                            {{ dealer_car.id_dealer_car.car.type_drive }}
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <diV class="name-character">
+                                            <h3>Тип кузова:</h3>
+                                        </diV>
+                                        <div class="val-character">
+                                            {{ dealer_car.id_dealer_car.car.body_type }}
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <diV class="name-character">
+                                            <h3>Класс:</h3>
+                                        </diV>
+                                        <div class="val-character">
+                                            {{ dealer_car.id_dealer_car.car.car_class }}
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <diV class="name-character">
+                                            <h3>Автосалон:</h3>
+                                        </diV>
+                                        <div class="val-character">
+                                            {{ dealer_car.car_dealership.name }}
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="info-price">
+                                <span class="price">{{ dealer_car.new_price|floatformat:2 }} BYN</span>
+                            </div>
+                            <div class="infor-more">
+                                <a class="info-link" href="{% url 'book_in_list' car_id=dealer_car.pk %}"><button>Забронировать</button></a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="pagination">
+        {% include 'Dealer/pagination.html' %}
+    </div>
+{% endblock %}

@@ -27,32 +27,44 @@
             </div>
             <div class="account-edit">
                 <div class="input-container">
-                    <label>Username:</label>
+                    <label>Псевдоним:</label>
                     <input value="{{user.username}}" readonly>
                 </div>
                 <div class="input-container">
-                    <label>Email:</label>
+                    <label>Почта:</label>
                     <input value="{{user.email}}" readonly>
                 </div>
                 <div class="input-container">
-                    <label>First name:</label>
+                    <label>Имя:</label>
                     <input value="{{user.first_name}}" readonly>
                 </div>
                 <div class="input-container">
-                    <label>Last name:</label>
+                    <label>Фамилия:</label>
                     <input value="{{user.last_name}}" readonly>
                 </div>
                 <div class="input-container">
-                    <label>Date birth:</label>
-                    <input value="{{user.date_birth}}" readonly>
+                    <label>Дата рождения:</label>
+                    {% if user.date_birth %}
+                        <input value="{{user.date_birth}}" readonly>
+                    {% else %}
+                        <input value="" readonly>
+                    {% endif %}
                 </div>
                 <div class="input-container">
-                    <label>Passport:</label>
-                    <input value="{{user.passport}}" readonly>
+                    <label>Паспорт:</label>
+                    {% if user.passport %}
+                        <input value="{{user.passport}}" readonly>
+                    {% else %}
+                        <input value="" readonly>
+                    {% endif %}
                 </div>
                 <div class="input-container">
-                    <label>Phone:</label>
-                    <input value="{{user.phone}}" readonly>
+                    <label>Телефон:</label>
+                    {% if user.phone %}
+                        <input value="{{user.phone}}" readonly>
+                    {% else %}
+                        <input value="" readonly>
+                    {% endif %}
                 </div>
             </div>
         </form>

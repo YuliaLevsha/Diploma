@@ -23,7 +23,16 @@ urlpatterns = [
     path('customer-trade/', create_trade_car, name='create_trade'),
     
     path('customer-history/', get_user_history, name='customer_history'),
-    path('customer-trade-cars/', get_customer_trade_cars, name='customer_trade'),
+    path('customer-trade-cars/', get_customer_trade_cars, name='get_customer_trade'),
+    path('trade-car/<car_id>/', get_car_trade, name='get_trade_car'),
     path('customer-requests/', get_all_customer_requests, name='customer_requests'),
-    path('dealership-cars/', get_dealership_cars, name='dealership_cars'),
+    path('dealership-cars/', get_cars_dealership, name='dealership_cars'),
+    
+    path('dealership-cars/<dealership_car_id>/', booked_car, name='booked_car'),
+    
+    path('director-history/', history_director, name='director_history'),
+    path('book-in-list/<car_id>/', book_car_in_list, name='book_in_list'),
+    
+    path('confirm-trade/<request_id>/', confirm_trade, name='checked_trade_customer'),
+    path('deny-trade/<request_id>/', deny_trade, name='deny_trade_customer'),
 ]

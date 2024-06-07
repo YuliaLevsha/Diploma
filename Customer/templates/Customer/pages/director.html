@@ -1,0 +1,48 @@
+{% extends "Customer/base.html" %}
+{% load static %}
+
+{% block css %} 
+    <link type='text/css' href="{% static 'Customer/css/requests.css' %}" rel="stylesheet" />
+{% endblock %}
+
+{% block content %} 
+    <div class="container">
+        <div class="table1">
+            <div class="table-header">
+                <div class="header-item">Кто</div>
+                <div class="header-item">Действие</div>
+                <div class="header-item">Объект</div>
+                <div class="header-item">Время</div>
+            </div>
+                <div class="table-content">
+                    {% for list_ in history %}
+                        {% for el in list_ %}
+                            {% for record in el %}
+                                <div class="table-row">
+                                    <div class="table-data">
+                                        {% if not record.history_user%}
+                                            Пропущено
+                                        {% else %}
+                                            {{record.history_user}}
+                                        {% endif %}
+                                    </div>
+                                    <div class="table-data">
+                                        {{record.history_type}}
+                                    </div>
+                                    <div class="table-data">
+                                        {{record.instance}}
+                                    </div>
+                                    <div class="table-data">
+                                        {{record.history_date}}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+        </div>
+    </div>
+    <div class="pagination">
+        {% include 'Dealer/pagination.html' %}
+    </div>
+{% endblock %}

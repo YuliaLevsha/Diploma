@@ -1,5 +1,5 @@
 .container{
-    margin: 10px;
+    margin: 30px auto;
     width: 90%;
     max-width: 90vw;
     text-align: center;
@@ -13,13 +13,31 @@
 }
 
 .title{
-    font-size: xx-large;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    font-size: 40px;
+    font-weight: 700;
     padding: 20px 0;
 }
 
+.title-name{
+    flex: 1;
+    max-width: 400px;
+}
+
+.title-edit{
+    flex: 2;
+    max-width: 50px;
+}
+
+hr{
+    height: 3px;
+    background-color: black;
+}
+
 .detail{
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    display: flex;
     gap: 50px;
     text-align: left;
 }
@@ -32,11 +50,16 @@
 
 .detail .image{
     position: relative;
+    flex: 1;
 }
 
 .content{
+    background-color: white;
+    flex: 2;
     margin: 40px;
     color: black;
+    border: 2px solid black;
+    border-radius: 10px;
 }
 
 .content-field{

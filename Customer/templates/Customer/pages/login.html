@@ -10,15 +10,23 @@
     <link type='text/css' href="{% static 'Customer/css/register_login.css' %}" rel="stylesheet" />
 </head>
 <body>
+    {% if messages %}
+        <div class="alert" id="alert">
+            {% for message in messages %}
+            <div class="msg">{{message}}</div>
+            {% endfor %}
+            <div class="btn-ok"><button class="ok" onclick="hide()">Ок</button></div>
+        </div>
+    {% endif %}
 <div class="container">
     <div class="login form">
         <header>Авторизация</header>
         <form method="post">
             {% csrf_token %} 
-            {% for field in context %} 
-                {{ field.label_tag }}
-                {{ field }}
-            {% endfor %} 
+            Псевдоним
+            {{context.username}}
+            Пароль
+            {{context.password}}
             <a href="{% url 'forgot_password' %}">Забыли пароль?</a>
             <button class="button">Войти</button>
         </form>
@@ -30,4 +38,10 @@
     </div>
 </div>
 </body>
+<script>
+    function hide(){
+        var alert = document.getElementById('alert')
+        alert.style.display = "none"
+    }
+</script>
 </html>

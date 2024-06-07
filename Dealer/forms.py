@@ -1,13 +1,12 @@
 from Dealer.models import *
 from django import forms
 from datetime import datetime
-from base_model import Colors, BodyTypes, DriveTypes, G8Countries
-from django_countries.fields import CountryField
+from base_model import *
 
 
 class DealerForm(forms.ModelForm):
-    name = forms.CharField(max_length=255)
-    foundation_year = forms.IntegerField()
+    name = forms.CharField(max_length=255, label='Название')
+    foundation_year = forms.IntegerField(label='Год основания')
     
     class Meta:
         model = Dealer
@@ -22,19 +21,24 @@ class DealerForm(forms.ModelForm):
 
 
 class CarForm(forms.ModelForm):
-    car_model = forms.ModelChoiceField(queryset=CarModel.objects.all())
-    car_year = forms.IntegerField()
-    car_color = forms.ChoiceField(choices=Colors.choices)
-    number_of_doors = forms.IntegerField()
-    body_type = forms.ChoiceField(choices=BodyTypes.choices)
-    country =  forms.ChoiceField(choices=G8Countries)
-    type_drive = forms.ChoiceField(choices=DriveTypes.choices)
-    volume_fuel_tank = forms.IntegerField()
-    car_image = forms.ImageField()
+    name = forms.CharField(max_length=100, label='Полное наименование')
+    car_model = forms.ModelChoiceField(queryset=CarModel.objects.all(), label='Марка')
+    car_year = forms.IntegerField(label='Год создания')
+    car_color = forms.ChoiceField(choices=Colors.choices, label='Цвет')
+    number_of_doors = forms.IntegerField(label='Кол-во дверей')
+    body_type = forms.ChoiceField(choices=BodyTypes.choices, label='Кузов')
+    country =  forms.ChoiceField(choices=Countries.choices, label='Производитель')
+    car_number = forms.CharField(max_length=20, label='Номер')
+    transmission = forms.ChoiceField(choices=Transmission.choices, label='КПП')
+    car_class = forms.ChoiceField(choices=ConfigurationType.choices, label='Комплектация')
+    type_fuel = forms.ChoiceField(choices=FuelType.choices, label='Топливо')
+    type_drive = forms.ChoiceField(choices=DriveTypes.choices, label='Привод')
+    car_image = forms.ImageField(label='Фотография')
     
     class Meta:
         model = Car
-        fields = ('car_model', 'car_year', 'car_color', 'number_of_doors', 'body_type', 'country', 'type_drive', 'volume_fuel_tank', 'car_image')
+        fields = ('name', 'car_model', 'car_year', 'car_color', 'number_of_doors', 'body_type', 'country', 
+                  'car_number', 'transmission', 'car_class', 'type_fuel', 'type_drive', 'car_image')
     
     def clean_car_year(self):
         car_year = self.cleaned_data.get('car_year')
@@ -48,17 +52,11 @@ class CarForm(forms.ModelForm):
         if not (number_of_doors >= 2 and number_of_doors <= 5):
             raise forms.ValidationError('Неверный формат количества дверей. Должно быть от 2 до 5')
         return number_of_doors
-    
-    def clean_volume_fuel_tank(self):
-        volume_fuel_tank = self.cleaned_data.get('volume_fuel_tank')
-        if not (volume_fuel_tank >= 30 and volume_fuel_tank <= 100):
-            raise forms.ValidationError('Неверный формат объема топливного бака. Должно быть от 30 до 100 л')
-        return volume_fuel_tank
 
 
 class DealerCarsForm(forms.Form):
-    dealer = forms.ModelChoiceField(queryset=Dealer.objects.all())
-    price = forms.DecimalField(max_digits=7, decimal_places=2)
+    dealer = forms.ModelChoiceField(queryset=Dealer.objects.all(), label='Поставщик')
+    price = forms.DecimalField(max_digits=7, decimal_places=2, label='Цена')
     
     def clean_max_price(self):
         price = self.cleaned_data.get('price')

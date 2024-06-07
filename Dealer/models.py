@@ -1,26 +1,27 @@
 from django.db import models
-from django_countries.fields import CountryField
-from base_model import BaseModel, G8Countries, Colors, BodyTypes, DriveTypes
+from base_model import *
 from djmoney.models.fields import MoneyField
 from typing import Any
+from simple_history.models import HistoricalRecords
 
 
 class Dealer(BaseModel):
     """Модель поставщика, которая содержит:
     название, год основания, число покупателей, список машин для продажи"""
-    name = models.CharField(max_length=255, verbose_name="Dealer name")
+    name = models.CharField(max_length=255, verbose_name="Название")
     foundation_year = models.PositiveIntegerField(
-        verbose_name="Dealer foundation year"
+        verbose_name="Год основания"
     )
     customers_count = models.PositiveIntegerField(
-        default=0, verbose_name="Dealer customers count"
+        default=0, verbose_name="Кол-во клиентов"
     )
     dealer_cars = models.ManyToManyField(
         "Car",
         through="DealerCars",
-        verbose_name="Dealers cars to sale",
+        verbose_name="Машины",
         related_name="dealers",
     )
+    history = HistoricalRecords()
 
     class Meta:
         db_table = "dealer"
@@ -32,7 +33,7 @@ class Dealer(BaseModel):
 
 class CarModel(BaseModel):
     """Модель марка машины с названием"""
-    name = models.CharField(max_length=255, verbose_name="Name model")
+    name = models.CharField(max_length=255, verbose_name="Название")
     
     def __str__(self) -> str:
         return self.name
@@ -44,37 +45,47 @@ class CarModel(BaseModel):
 
 class Car(BaseModel):
     """Модель машина с полями:
-    id на модель, год создания, цвет, количество дверей, тип кузова, тип привода, 
-    страна производитель, объем топливного бака и изображение"""
+    id на модель, название, год создания, цвет, количество дверей, тип кузова, тип привода, 
+    страна производитель, изображение, коробка передачи, тип топлива"""
+    name = models.CharField(max_length=100, verbose_name='Полное название', default=None)
     car_model = models.ForeignKey(
         CarModel,
         on_delete=models.CASCADE,
-        verbose_name="Car model",
+        verbose_name="Марка",
         related_name="cars",
     )
     car_year = models.PositiveIntegerField(
-        blank=False, verbose_name="Car year"
+        blank=False, verbose_name="Год создания"
     )
-    car_color = models.CharField(max_length=255, choices=Colors.choices, verbose_name="Car color", default=None)
+    car_color = models.CharField(max_length=255, choices=Colors.choices, verbose_name="Цвет", default=None)
     number_of_doors = models.PositiveIntegerField(
-        default=2, blank=True, verbose_name="Number of doors in car"
+        default=2, blank=True, verbose_name="Кол-во дверей"
     )    
     body_type = models.CharField(
-        max_length=255, choices=BodyTypes.choices, verbose_name="Car body type", default=None
+        max_length=255, choices=BodyTypes.choices, verbose_name="Кузов", default=None
     )    
     type_drive = models.CharField(
-        max_length=255, choices=DriveTypes.choices, verbose_name="Car type drive", default=None
+        max_length=255, choices=DriveTypes.choices, verbose_name="Привод", default=None
     )
-    country = CountryField(
-        countries=G8Countries,
-        verbose_name="Car country",
-        default=None
+    country = models.CharField(
+        max_length=255, choices=Countries.choices, verbose_name="Производитель", default=None
     )
-    volume_fuel_tank = models.PositiveIntegerField(
-        blank=False, verbose_name="Car volume of fuel tank"
+    car_number = models.CharField(max_length=20, verbose_name='Номер', default=None)
+    transmission = models.CharField(
+        max_length=20, choices=Transmission.choices, default=None, verbose_name='КПП'
+    )
+    car_class = models.CharField(
+        max_length=10, choices=ConfigurationType.choices, default=None, verbose_name='Комплектация'
+    )
+    type_fuel = models.CharField(
+        max_length=20, choices=FuelType.choices, default=None, verbose_name='Топливо'
     )
     car_image = models.ImageField(upload_to='cars/', null=True, max_length=255, default=None)
-
+    history = HistoricalRecords()
+    
+    def __str__(self) -> str:
+        return self.name
+    
     class Meta:
         db_table = "car"
         verbose_name = "Car"
@@ -87,21 +98,26 @@ class DealerCars(BaseModel):
         on_delete=models.CASCADE,
         null=True,
         related_name="list_cars",
-        verbose_name="Dealer of car",
+        verbose_name="Поставщик",
     )
     car = models.ForeignKey(
         Car,
         on_delete=models.CASCADE,
         null=True,
         related_name="list_dealers",
-        verbose_name="Car to sale",
+        verbose_name="Машина",
     )
     price = MoneyField(
         max_digits=7,
         decimal_places=2,
-        default_currency="USD",
-        verbose_name="Car price from dealer",
+        default_currency="BYN",
+        verbose_name="Цена",
     )
+    is_booked = models.BooleanField(default=False, verbose_name='Забронировано')
+    history = HistoricalRecords()
+    
+    def __str__(self) -> str:
+        return str(self.dealer) + " " + str(self.car)
 
     class Meta:
         db_table = "dealer_cars"
@@ -118,17 +134,21 @@ class DealersSalesHistory(
         on_delete=models.CASCADE,
         null=True,
         related_name="sales_history",
-        verbose_name="Dealer and car"
+        verbose_name="Машина и поставщик"
     )
     car_dealership = models.ForeignKey(
         "CarDealership.CarDealership",
         on_delete=models.CASCADE,
         null=True,
         related_name="list_cars",
-        verbose_name="Car dealership who bought car"
+        verbose_name="Автосалон"
     )
-    is_booked = models.BooleanField(default=False, verbose_name='Car is booked by user or not')
-    is_bought = models.BooleanField(default=False, verbose_name='Car is bought by user or not')
+    is_booked = models.BooleanField(default=False, verbose_name='Забронировано клиентом')
+    is_bought = models.BooleanField(default=False, verbose_name='Куплено клиентом')
+    history = HistoricalRecords()
+    
+    def __str__(self) -> str:
+        return str(self.id_dealer_car) + " " + str(self.car_dealership)
 
     class Meta:
         db_table = "dealers_history"

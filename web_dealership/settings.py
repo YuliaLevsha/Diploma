@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "django_countries",
+    "django_filters",
+    'simple_history',
     "django_celery_beat",
     "django_celery_results",
     'Customer.apps.CustomerConfig',
@@ -51,11 +53,13 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'simple_history.middleware.HistoryRequestMiddleware',
 ]
 
 ROOT_URLCONF = 'web_dealership.urls'
@@ -77,12 +81,6 @@ TEMPLATES = [
     },
 ]
 
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.redis.RedisCache',
-        'LOCATION': 'redis://localhost:6379',
-    }
-}
 
 WSGI_APPLICATION = 'web_dealership.wsgi.application'
 
@@ -93,10 +91,10 @@ WSGI_APPLICATION = 'web_dealership.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME':  os.environ.get("POSTGRES_DB"),
-        'USER':  os.environ.get("POSTGRES_USER"),
-        'PASSWORD':  os.environ.get("POSTGRES_PASSWORD"),
-        'HOST':  os.environ.get("HOST"),
+        'NAME':  'Dealership',
+        'USER':  'postgres',
+        'PASSWORD':  'mnb123qwe123QWE',
+        'HOST':  'localhost',
         'PORT':  '5432'
     }
 }
@@ -151,17 +149,19 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_USE_TLS = True
 EMAIL_HOST = "smtp.gmail.com"
-EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD =  os.environ.get("EMAIL_HOST_PASSWORD")
+EMAIL_HOST_USER = 'yulialoverose@gmail.com'
+EMAIL_HOST_PASSWORD =  'wyinimpohngiwyoi'
 EMAIL_PORT = 587
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
-CELERY_BROKER_URL = os.environ.get("CELERY_BROKER_URL")
-CELERY_RESULT_BACKEND = os.environ.get("CELERY_RESULT_BACKEND")
-CELERY_ACCEPT_CONTENT = ["application/json"]
-CELERY_TASK_SERIALIZER = "json"
-CELERY_RESULT_SERIALIZER = "json"
-CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
+
+CELERY_BROKER_URL = 'pyamqp://guest:guest@localhost//'
+CELERY_RESULT_BACKEND = 'rpc://localhost'
 CELERY_TIMEZONE = "Europe/Minsk"
 CELERY_IMPORTS = ["tasks"]
 CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
+CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_WORKER_POOL = 'solo'

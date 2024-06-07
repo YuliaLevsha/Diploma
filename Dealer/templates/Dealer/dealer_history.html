@@ -1,8 +1,51 @@
 {% extends "Customer/base.html" %}
+{% load static %}
+
 {% block css %} 
+    <link type='text/css' href="{% static 'Dealer/css/confirm.css' %}" rel="stylesheet" />
 {% endblock %}
+
 {% block content %} 
-    {% for model in car %}
-        {{model}}
-    {% endfor %}
+    <div class="container">
+        <div class="table">
+            <div class="table-header">
+                <div class="header-item">Автосалон</div>
+                <div class="header-item">Машина</div>
+                <div class="header-item">Поставщик</div>
+                <div class="header-item">Цена</div>
+                <div class="header-item">Дата</div>
+            </div>
+            <div class="table-content">
+                {% if not page_obj %}
+                <div class="table-row">
+                    <div class="table-data">
+                        Пусто
+                    </div>
+                </div>
+                {% endif %}
+                {% for request in page_obj %}
+                    <div class="table-row">
+                        <div class="table-data">
+                            {{request.car_dealership.name}}
+                        </div>
+                        <div class="table-data">
+                            <a href="{% url 'get_car' car_id=request.id_dealer_car.car.id %}">{{request.id_dealer_car.car.name}}</a>
+                        </div>
+                        <div class="table-data">
+                            {{request.id_dealer_car.dealer.name}}
+                        </div>
+                        <div class="table-data">
+                            {{request.id_dealer_car.price}}
+                        </div>
+                        <div class="table-data">
+                            {{request.created_at|date:"d.m.y"}}г.
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="pagination">
+        {% include 'Dealer/pagination.html' %}
+    </div>
 {% endblock %}

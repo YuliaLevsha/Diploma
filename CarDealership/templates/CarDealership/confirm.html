@@ -1,0 +1,22 @@
+{% extends "Customer/base.html" %}
+{% load static %}
+
+{% block css %} 
+    <link type='text/css' href="{% static 'Dealer/css/add_dealer.css' %}" rel="stylesheet" />
+{% endblock %}
+
+{% block content %} 
+    <div class="container">
+        <div class="add form">
+            <header>Выберите способ оплаты</header>
+            <form method="post">
+                {% csrf_token %} 
+                {% for field in context %} 
+                    {{ field.label_tag }}
+                    {{ field }}
+                {% endfor %} 
+            <button class="button">Выбрать</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

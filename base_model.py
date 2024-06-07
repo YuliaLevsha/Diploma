@@ -1,5 +1,4 @@
 from django.db import models
-from django_countries import Countries
 
 
 class BaseModel(models.Model):
@@ -11,12 +10,20 @@ class BaseModel(models.Model):
         abstract = True
 
 
-class G8Countries(Countries):
-    only = ["CA", "FR", "DE", "IT", "JP", "RU", "GB", "CN"]
+class Countries(models.TextChoices):
+    Канада = "Канада"
+    Франция = "Франция"
+    Германия = "Германия"
+    Италия  = "Италия"
+    Япония = "Япония"
+    Россия = "Россия"
+    Великобритания = "Великобритания"
+    Китай = "Китай"
 
 
 def default_car():
     return {
+        'name': None,
         'car_model': None,
         'car_year': None,
         'car_color': None,
@@ -24,39 +31,67 @@ def default_car():
         'body_type': None,
         'type_drive': None,
         'country': None,
-        'volume_fuel_tank': None
+        'car_number': None,
+        'car_class': None, 
+        'transmission': None,
+        'type_fuel': None
     }
 
 
 class Colors(models.TextChoices):
-    YELLOW = "Желтый"
-    BLACK = "Черный"
-    WHITE = "Белый"
-    RED = "Красный"
-    BLUE = "Синий"
-    GREY = "Серый"
-    GREEN = "Зеленый"
-    BROWN = "Коричневый"
+    Желтый = "Желтый"
+    Черный = "Черный"
+    Белый = "Белый"
+    Красный = "Красный"
+    Синий = "Синий"
+    Серый = "Серый"
+    Зеленый = "Зеленый"
+    Коричневый = "Коричневый"
 
 
 class BodyTypes(models.TextChoices):
-    SEDAN = "Sedan"
-    HATCHBACK = "Hatchback"
-    CROSSOVER = "SUV"
-    COUPE = "Coupe"
-    MINIVAN = "Minivan"
-    PICKUP = "Pickup"
-    CONVERTIBLE = "Convertible"
+    Седан = "Седан"
+    Хэтчбек = "Хэтчбек"
+    Внедорожник = "Внедорожник"
+    Купе = "Купе"
+    Минивэн = "Минивэн"
+    Пикап = "Пикап"
+    Кабриолет = "Кабриолет"
 
 
 class DriveTypes(models.TextChoices):
-    FRONT = "Front"
-    REAR = "Rear"
-    ALL = "All"
+    Передний = "Передний"
+    Задний = "Задний"
+    Полный = "Полный"
+
+
+class Transmission(models.TextChoices):
+    Механическая = "Механическая"
+    Автоматическая = "Автоматическая"
+    Триптроник = "Триптроник"
+
+
+class ConfigurationType(models.TextChoices):
+    Классика = "Классика"
+    Комфорт = "Комфорт"
+    Премиум = "Премиум"
+
+
+class FuelType(models.TextChoices):
+    Бензин = "Бензин"
+    Дизель = "Дизель"
+    Гибрид = "Гибрид"
+    Электричество = "Электричество"
 
 
 class PeriodCredit(models.TextChoices):
-    VALUE1 = '6 месяцев'
-    VALUE2 = '12 месяцев'
-    VALUE3 = '18 месяцев'
-    VALUE4 = '24 месяцев'
+    Шесть_месяцев = '6 месяцев'
+    Двенадцать_месяцев = '12 месяцев'
+    Восемнадцать_месяцев = '18 месяцев'
+    Двадцать_четыре_месяца = '24 месяцев'
+
+
+class Payment(models.TextChoices):
+    Наличные = 'Наличные'
+    Кредит = 'Кредит'
+    Банковская_карта = 'Банковская карта'

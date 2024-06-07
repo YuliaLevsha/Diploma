@@ -1,86 +1,304 @@
-.content{
-    margin-top: 50px;
+.wrapper{
+    margin: 50px 20px;
+    display: flex;
 }
 
-.container{
-    width: 100%;
-    margin: 0 50px;
+.filter-block{
+    margin-top: 20px;
+    height: 600px;
+    flex: 1;
+    background-color: white;
+    max-width: 450px;
+    margin-right: 40px;
 }
 
-.dealer-info{
+.filter-block .filter-row{
     font-size: 24px;
-    text-align: center;
-    margin-bottom: 40px;
+    margin: 15px 20px;
+    display: flex;
 }
 
-.cards-grid{
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-gap: 20px;
+.filter-row .filter-name{
+    font-weight: 600;
+    flex: 1;
 }
 
-.cards{
+.filter-row .filter-vl{
+    padding-left: 15px;
+    max-width: 150px;
+    flex: 2;
+}
+
+.filter-vl input{
+    font-size: 20px;
+    height: 25px;
+    width: 50px;
+}
+
+.filter-vl select{
+    font-size: 20px;
+    height: 25px;
+    width: 150px;
+}
+
+.filter-btn{
+    margin-top: 40px;
     margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.filter-btn button{
+    width: 80%;
+    padding: 10px 0;
+    font-size: 24px;
+    cursor: pointer;
+    font-weight: 600;
+    color: white;
+    border: none;
+    background-color: #F7882F;
+    border-radius: 8px;
+}
+
+.cars-block{
+    flex: 2;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
 }
 
 .card{
-    display: flex;
-    flex-direction: column;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 30px;
     background: #fff none repeat scroll 0 0;
-	border: 1px solid #c0c0c0;
-	height: 350px;
+	border: 2px solid #c0c0c0;
+	height: 700px;
 	overflow: hidden;
-	position: relative;
 	text-align: center;
 	transition: all 0.5s ease 0s;
-    width: 300px;
-}
-
-.card:hover{
-    box-shadow: 0 0 16px rgba(0, 0, 0, 0.5);
+    width: 400px;
 }
 
 .image{
-    height: 200px;
+    margin: 10px 15px;
+    vertical-align: top;
+}
+
+.image h3{
+    position: absolute;
+    margin-top: 115px;
+    text-transform: uppercase;
+    font-size: 40px;
+    margin-left: 2px;
+    color: white;
+    text-align: center;
 }
 
 .image img{
-    height: 200px;
-    width: 300px;
+    height: 277px;
+    width: 100%;
     object-fit: cover;
-    border-radius: 7px;
 }
 
-.info h3{
-    font-size: 30px;
-    margin-bottom: 0;
-    color: #000;
-	font-weight: 500;
-	text-transform: uppercase;
+.info .main-info{
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.main-info .car-name{
+    font-size: 28px;
+    font-weight: 500;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+}
+
+.main-info .car-year{
+    max-width: 100px;
+    font-size: 24px;
+    flex: 2;
+}
+
+.info .car-characters{
+    margin: 10px 0;
+    text-align: left;
+    font-size: 20px;
+}
+
+.car-characters li{
+    display: flex;
+}
+
+.car-characters li .name-character{
+    flex: 1;
+    margin: 0 10px;
+}
+
+.car-characters li .val-character{
+    flex: 2;
+    max-width: 200px;
 }
 
 .info-price{
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-between;
-    margin-top: 10px;
-    align-items: center;
+    margin-bottom: 10px;
 }
 
 .price{
 	left: 0;
 	width: 100%;
     font-weight: 700;
-    font-size: 20px;
+    font-size: 28px;
 }
 
-.info-link{
+.infor-more{
+    margin-top: 20px;
+    margin-bottom: 0;
+}
+
+.infor-more button{
+    width: 80%;
+    padding: 10px 0;
+    font-size: 24px;
     cursor: pointer;
-    font-size: 20px;
     font-weight: 600;
-    color: black;
+    color: white;
+    border: none;
+    background-color: #F7882F;
+    border-radius: 8px;
 }
 
-.info-link:hover{
-    color: #009575;
+.infor-more button:hover{
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+}
+
+.pagination{
+    bottom: 0;
+    padding: 10px 30px;
+    width: 50%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+@media screen and (max-width: 768px) {
+    .wrapper {
+        flex-direction: column;
+    }
+  
+    .filter-block {
+        height: auto;
+        max-width: none;
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+  
+    .cars-block {
+        display: grid;
+        margin-left:auto;
+        margin-right:auto;
+        grid-template-columns: 1fr;
+    }
+  
+    .card {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        margin-left: 30px;
+        background: #fff none repeat scroll 0 0;
+	    border: 2px solid #c0c0c0;
+	    height: 700px;
+	    overflow: hidden;
+	    text-align: center;
+	    transition: all 0.5s ease 0s;
+        max-width: 400px;
+    }
+  
+    .image{
+        margin: 10px 15px;
+        vertical-align: top;
+    }
+    
+    .image img{
+        height: auto;
+        width: 100%;
+        object-fit: cover;
+    }
+    
+    .info .main-info{
+        display: flex;
+        margin-bottom: 10px;
+    }
+    
+    .main-info .car-name{
+        font-size: 28px;
+        font-weight: 500;
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center; 
+    }
+    
+    .main-info .car-year{
+        max-width: 100px;
+        font-size: 24px;
+        flex: 2;
+    }
+    
+    .info .car-characters{
+        margin: 10px 0;
+        text-align: left;
+        font-size: 20px;
+    }
+    
+    .car-characters li{
+        display: flex;
+    }
+    
+    .car-characters li .name-character{
+        flex: 1;
+        margin: 0 10px;
+    }
+    
+    .car-characters li .val-character{
+        flex: 2;
+        max-width: 200px;
+    }
+    
+    .info-price{
+        margin-bottom: 10px;
+    }
+    
+    .price{
+        left: 0;
+        width: 100%;
+        font-weight: 700;
+        font-size: 28px;
+    }
+    
+    .infor-more{
+        margin-top: 20px;
+        margin-bottom: 0;
+    }
+    
+    .infor-more button{
+        width: 80%;
+        padding: 10px 0;
+        font-size: 24px;
+        cursor: pointer;
+        font-weight: 600;
+        color: white;
+        border: none;
+        background-color: #F7882F;
+        border-radius: 8px;
+    }
+    
+    .infor-more button:hover{
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+    }
+  
+    .pagination {
+      width: 50%;
+    }
 }

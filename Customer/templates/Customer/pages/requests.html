@@ -1,0 +1,101 @@
+{% extends "Customer/base.html" %}
+{% load static %}
+
+{% block css %} 
+    <link type='text/css' href="{% static 'Customer/css/requests.css' %}" rel="stylesheet" />
+{% endblock %}
+
+{% block content %} 
+    <div class="container">
+        <div class="table1">
+            <div class="table-header">
+                <div class="header-item">Стоимость</div>
+                <div class="header-item">Марка машины</div>
+                <div class="header-item">Тип кузова</div>
+                <div class="header-item">Тип привода</div>
+                <div class="header-item">Комплектация</div>
+                <div class="header-item">КПП</div>
+                <div class="header-item">Тип топлива</div>
+                <div class="header-item">Год</div>
+                <div class="header-item">Статус</div>
+            </div>
+            <div class="table-content">
+                {% if not offers %}
+                <div class="table-row">
+                    <div class="table-data">
+                        Пусто
+                    </div>
+                </div>
+                {% endif %}
+                {% for offer in offers %}
+                    <div class="table-row">
+                        <div class="table-data">
+                            {{offer.cost}}
+                        </div>
+                        <div class="table-data">
+                            {{offer.id_dealership_car.id_dealer_car.car.car_model.name}}
+                        </div>
+                        <div class="table-data">
+                            {{offer.id_dealership_car.id_dealer_car.car.body_type}}
+                        </div>
+                        <div class="table-data">
+                            {{offer.id_dealership_car.id_dealer_car.car.type_drive}}
+                        </div>
+                        <div class="table-data">
+                            {{offer.id_dealership_car.id_dealer_car.car.transmission}}
+                        </div>
+                        <div class="table-data">
+                            {{offer.id_dealership_car.id_dealer_car.car.type_fuel}}
+                        </div>
+                        <div class="table-data">
+                            {{offer.id_dealership_car.id_dealer_car.car.car_year}}
+                        </div>
+                        <div class="table-data">
+                            {% if offer.is_active %}
+                                Одобрено
+                            {% else %}
+                                Ожидается
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="table">
+        <div class="table-header">
+            <div class="header-item">Сумма</div>
+            <div class="header-item">Срок</div>
+            <div class="header-item">Статус</div>
+        </div>
+        <div class="table-content">
+            {% if not credits %}
+            <div class="table-row">
+                <div class="table-data">
+                    Пусто
+                </div>
+            </div>
+            {% endif %}
+            {% for credit in credits %}
+                <div class="table-row">
+                    <div class="table-data">
+                        {{credit.sum_credit}}
+                    </div>
+                    <div class="table-data">
+                        {{credit.period_time}}
+                    </div>
+                    <div class="table-data">
+                        {% if credit.is_active %}
+                            Одобрено
+                        {% else %}
+                            Ожидается
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="pagination">
+        {% include 'Dealer/pagination.html' %}
+    </div>
+{% endblock %}

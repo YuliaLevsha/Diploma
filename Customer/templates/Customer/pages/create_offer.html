@@ -1,23 +1,49 @@
 {% extends "Customer/base.html" %}
-{% block content %} 
-    {% if messages %}
-        {% for message in messages %}
-            {{ message }}
-        {% endfor %}
-    {% endif %}
+{% load static %}
+{% load i18n %}
 
+{% block css %} 
+    <link type='text/css' href="{% static 'Dealer/css/add_car.css' %}" rel="stylesheet" />
+{% endblock %}
+{% block script %}
+<script>
+    function hide(){
+        var alert = document.getElementById('alert')
+        alert.style.display = "none"
+    }
+</script>
+{% endblock%}
+
+{% block content %} 
     <div class="container">
-        <h1>Create offer page</h1>
-        <form method="post">
-            {% csrf_token %} 
-            {% for field in context %} 
-                {{ field.label_tag }}
-                {{ field }} 
-                {% for error in field.errors %} 
-                    {{ error }}
+{% if messages %}
+        <div class="alert" id="alert">
+            {% for message in messages %}
+            <div class="msg">{{message}}</div>
+            {% endfor %}
+            <div class="btn-ok"><button class="ok" onclick="hide()">Ок</button></div>
+        </div>
+    {% endif %}
+    {% if context.errors %}
+        <div class="alert" id="alert">
+            {% for field in context %}
+                {% for error in field.errors%}
+                    <div class="msg">{% trans error %}</div>
+                {% endfor %}
+            {% endfor %}
+            <div class="btn-ok"><button class="ok" onclick="hide()">Ок</button></div>
+        </div>
+    {% endif %}
+        <div class="add form">
+            <header>Сделать заявку на бронирование</header>
+            <form method="post">
+                {% csrf_token %} 
+                {% for field in context %} 
+                    {{ field.label_tag }}
+                    {{ field }}
                 {% endfor %} 
-            {% endfor %} 
-            <button type="submit">Подать заявку</button> 
+            <button class="button">Создать</button>
         </form>
     </div>
+</div>
 {% endblock %}
